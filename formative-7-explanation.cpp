@@ -5,7 +5,7 @@
 // holds data of player
 struct Player
 {
-	const static int MAX = 5;
+	const static int MAX = 10;
 
 	std::string nickname = "";
 	int age = 0;
@@ -33,7 +33,7 @@ struct Node
 void MainMenu(int&);
 
 void AddData(Player&);
-void AddRecord(Player&, Node*&);
+void AddRecord(Player&, Node*& head, Node*& tail);
 void ViewRecord(Node*&);
 void OpenFile(Node*& head);
 void ReadFile(Node*& head);
@@ -44,7 +44,8 @@ int main()
 	int choice;
 	// using principle of FILO
 		// it only uses head
-	Node* head = new Node;
+	Node* head = NULL;
+	Node* tail = NULL;
 	Player tempDataHolder;
 
 	do
@@ -56,7 +57,7 @@ int main()
 		{
 		case 1:
 			AddData(tempDataHolder);
-			AddRecord(tempDataHolder, head);
+			AddRecord(tempDataHolder, head, tail);
 			system("cls");
 			break;
 		case 2:
@@ -69,6 +70,9 @@ int main()
 		case 4:
 			ReadFile(head);
 			CloseFile();
+			break;
+		case 0:
+			exit(0);
 		default:
 			break;
 		}
@@ -86,11 +90,12 @@ void MainMenu(int& choice)
 			<< "2. Check Record\n"
 			<< "3. Save\n"
 			<< "4. Read\n"
+			<< "0. Exit\n"
 			<< "\n"
 			<< ":: ";
 		std::cin >> choice;
 		system("cls");
-	} while (choice < 1 && choice > 3);
+	} while (choice < 0 || choice > 4);
 }
 
 void AddData(Player& tempDataHolder)
@@ -110,22 +115,24 @@ void AddData(Player& tempDataHolder)
 	}
 }
 
-void AddRecord(Player& tempDataHolder, Node*& head)
+void AddRecord(Player& tempDataHolder, Node*& head, Node*& tail)
 {
-	// making node temporary
 	Node* temp = new Node;
+	
 
-	// adding information to the node
 	temp->player = tempDataHolder;
 
-	// always set next on temp in null
 	temp->next = NULL;
 
-	// setting that the head will have next node
-	head->next = temp;
-
-	// stating that the new head are temp
-	head = temp;
+	if (head == NULL)
+	{
+		head = temp;
+	}
+	else {
+		tail->next = temp;
+	
+	}
+	tail = temp;
 }
 
 void ViewRecord(Node*& head)
@@ -148,28 +155,41 @@ void ViewRecord(Node*& head)
 }
 
 void OpenFile(Node*& head) {
-	std::ofstream outFile("player_records.txt");
+	std::ofstream outFile("player_recordz.txt");
 	Node* current = head;
 
-	while (current != nullptr) {
-		outFile << "Name:: " << current->player.nickname << std::endl;
-		outFile << "Age: " << current->player.age << std::endl;
-		outFile << "Scores:";
-		for (int i = 0; i < 5; ++i) {
-			outFile << current->player.scores[i] << " ";
+	if (current != nullptr && outFile.is_open()) {
+
+		while (current)
+		{
+			outFile << "Name: " << current->player.nickname << std::endl;
+			outFile << "Age: " << current->player.age << std::endl;
+			outFile << "Scores: ";
+			for (int i = 0; i < head->player.MAX; ++i) {
+				outFile << current->player.scores[i] << " ";
+			}
+			outFile << std::endl;
+			current = current->next;
 		}
-		outFile << std::endl;
-		current = current->next;
+
+		std::cout << "Records saved to 'player_recordz.txt'." << std::endl;
 	}
+	else {
+		std::cout << "Invalid" << std::endl;
+	}
+	
 	outFile.close();
-	std::cout << "Records saved to 'player_records.txt'." << std::endl;
+	
+	
 }
 
 void ReadFile(Node*& head)
 {
-	std::ifstream inFile("player_records.txt");
+	std::ifstream inFile("player_recordz.txt");
 
 	std::cout << inFile.rdbuf();
+
+	inFile.close();
 
 	system("pause");
 	system("cls");
