@@ -12,7 +12,7 @@
   <h3 align="center">File Handling of Students Scores</h3>
 </div>
 <div align="center">
-  Lorem Ipsum
+  Manage students' scores through file handling.
 </div>
 
 <br />
