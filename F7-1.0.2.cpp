@@ -2,17 +2,14 @@
 #include <string>
 #include <fstream>
 
-// Structure that holds Data
 struct Player
 {
-  // Controls Maximum Scores that can be hold
   const static int MAX = 10;
 
   std::string nickname = "";
   int age = 0;
   double scores[MAX] = {};
 
-  // Function used to display data stored
   void Display()
   {
     std::cout
@@ -31,17 +28,13 @@ struct Player
   }
 };
 
-// Used to create node inside the LinkedList
 struct Node
 {
-  // Address of Following Node
   Node *next;
 
-  // Data Node Holds
   Player player;
 };
 
-// Functions that is used for Menus
 void MainMenu(int &);
 
 void AddData(Player &);
@@ -103,17 +96,14 @@ void MainMenu(int &choice)
   } while (choice < 0 || choice > 4);
 }
 
-// THis Function add Information inside the Node
 void AddData(Player &tempDataHolder)
 {
-  // Enter data nickname and age
   std::cout << "Enter Player Name: ";
   std::cin >> tempDataHolder.nickname;
 
   std::cout << "Enter Player Age: ";
   std::cin >> tempDataHolder.age;
 
-  // Enter scores, number of scores are based on MAX
   for (size_t i = 0; i < tempDataHolder.MAX; i++)
   {
     std::cout << "Enter Player Scores " << i + 1 << ": ";
@@ -121,42 +111,32 @@ void AddData(Player &tempDataHolder)
   }
 }
 
-// This function adds Node in the Linked List
 void AddRecord(Player &tempDataHolder, Node *&head, Node *&tail)
 {
   Node *temp = new Node;
 
-  // Preparing the node, by storing Data and Setting it next as NULL
   temp->player = tempDataHolder;
   temp->next = NULL;
 
-  // If there is no Head(No Linked List yet)
   if (!head)
     head = temp;
-  // If there is Head
   else
     tail->next = temp;
 
-  // Set the new tail
   tail = temp;
 }
 
-// Traverse Records
 void ViewRecord(Node *&head)
 {
-  // create temporary node(current) for traversing the linked list
   Node *temp = head;
 
   if (!head)
     std::cout << "-- No List Yet --";
   else
   {
-    // traverse while there is data in the linked list
     while (temp)
     {
-      // call the display function of the player structure
       temp->player.Display();
-      // Move to the next node
       temp = temp->next;
     }
   }
@@ -165,12 +145,9 @@ void ViewRecord(Node *&head)
   system("cls");
 }
 
-// Create Permanent File and Stores Data hold in the LinkedList
 void OpenFile(Node *&head, std::string recordFile)
 {
-  // create temporary node(current) for traversing the linked list
   Node *current = head;
-  // creates or connect to file
   std::ofstream outFile(recordFile);
 
   if (current != nullptr && outFile.is_open())
