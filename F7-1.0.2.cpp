@@ -171,7 +171,7 @@ void OpenFile(Node *&head, std::string recordFile)
       current = current->next;
     }
 
-    std::cout << "Records saved to 'player_recordz.txt'." << std::endl;
+    std::cout << "Records saved to " << recordFile << "." << std::endl;
   }
   else
     std::cout << "Invalid" << std::endl;
