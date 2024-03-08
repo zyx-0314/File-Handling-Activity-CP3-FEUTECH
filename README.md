@@ -65,7 +65,9 @@ This project focuses on managing students' scores through file handling techniqu
 
 This project has different versions aimed at enhancing its functionality and usability.
 
-### Base Project
+---
+
+### Base Project - 1.0.2
 Has LinkedList with FIFO concept applied, can store data and retrievable.
 
 #### Features
@@ -73,6 +75,20 @@ Has LinkedList with FIFO concept applied, can store data and retrievable.
 - Traverse Student Data
 - Save Permanent File
 - Retrieve Permanent File
+
+<br />
+
+---
+
+### 1.1.0 (in the work)
+Has LinkedList with FIFO concept applied, can store data and retrievable.
+
+#### Features
+- Store Student Data
+- Traverse Student Data
+- Save Permanent File
+- Retrieve Permanent File
+- Option to Create Custom Named File
 
 <br />
 
