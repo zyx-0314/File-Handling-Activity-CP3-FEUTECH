@@ -30,18 +30,18 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#project-overview">Project Overview</a>
+      <a href="https://github.com/zyx-0314/File-Handling-Activity-CP3-FEUTECH#project-overview">Project Overview</a>
     </li>
     <li>
-      <a href="#versions">Versions</a>
+      <a href="https://github.com/zyx-0314/File-Handling-Activity-CP3-FEUTECH#versions">Versions</a>
       <ol>
         <li>
-          <a href="Base-Project-1.0.2">Version 1</a>
+          <a href="https://github.com/zyx-0314/File-Handling-Activity-CP3-FEUTECH#base-project-1.0.2">Version 1</a>
         </li>
       </ol>
     </li>
     <li>
-      <a href="#contribute">Contribution</a>
+      <a href="https://github.com/zyx-0314/File-Handling-Activity-CP3-FEUTECH#contribute">Contribution</a>
     </li>
   </ol>
 </details>
@@ -57,7 +57,7 @@ This project focuses on managing students' scores through file handling techniqu
 
 <br />
 
-<div align="right">(<a href="#readme-top">back to top</a>)</div>
+<div align="right">(<a href="https://github.com/zyx-0314/File-Handling-Activity-CP3-FEUTECH#readme-top">back to top</a>)</div>
 
 ---
 
@@ -67,7 +67,7 @@ This project has different versions aimed at enhancing its functionality and usa
 
 ---
 
-### Base Project-1.0.2
+### Base Project - 1.0.2
 Has LinkedList with FIFO concept applied, can store data and retrievable.
 
 #### Features
@@ -92,7 +92,7 @@ Has LinkedList with FIFO concept applied, can store data and retrievable.
 
 <br />
 
-<div align="right">(<a href="#readme-top">back to top</a>)</div>
+<div align="right">(<a href="https://github.com/zyx-0314/File-Handling-Activity-CP3-FEUTECH#readme-top">back to top</a>)</div>
 
 ---
 
@@ -118,4 +118,4 @@ Has LinkedList with FIFO concept applied, can store data and retrievable.
   </li>
 <br />
 
-[Back to Top](#readme-top)
+<div align="right">(<a href="https://github.com/zyx-0314/File-Handling-Activity-CP3-FEUTECH#readme-top">back to top</a>)</div>
