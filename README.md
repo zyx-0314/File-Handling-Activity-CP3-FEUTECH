@@ -36,7 +36,7 @@
       <a href="#versions">Versions</a>
       <ol>
         <li>
-          <a href="version-1">Version 1</a>
+          <a href="Base-Project-1.0.2">Version 1</a>
         </li>
       </ol>
     </li>
@@ -67,7 +67,7 @@ This project has different versions aimed at enhancing its functionality and usa
 
 ---
 
-### Base Project - 1.0.2
+### Base Project-1.0.2
 Has LinkedList with FIFO concept applied, can store data and retrievable.
 
 #### Features
@@ -118,4 +118,4 @@ Has LinkedList with FIFO concept applied, can store data and retrievable.
   </li>
 <br />
 
-<div align="right">(<a href="#readme-top">back to top</a>)</div>
+[Back to Top](#readme-top)
