@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -12,22 +13,31 @@ struct Player
   int age = 0;
   double scores[MAX] = {};
 
+  // Function used to format data
+    // following DRY principle
+  std::string Format()
+  {
+    std::string data = "";
+    
+    data = "Name: " + this->nickname + "\n"
+         + "Age: " + std::to_string(this->age) + "\n"
+         + "Scores: ";
+    for (size_t i = 0; i < this->MAX; i++) {
+      data += std::to_string(this->scores[i]);
+
+      if (i == this->MAX - 1)
+        data += "\n";
+      else
+        data += ", ";
+    }
+
+    return data;
+  }
+
   // Function used to display data stored
   void Display()
   {
-    std::cout
-        << "Name: " << this->nickname << std::endl
-        << "Age: " << this->age << std::endl
-        << "Scores: ";
-    for (size_t i = 0; i < this->MAX; i++)
-    {
-      std::cout << scores[i];
-
-      if (i == this->MAX - 1)
-        std::cout << std::endl;
-      else
-        std::cout << ", ";
-    }
+    std::cout << this->Format();
   }
 };
 
@@ -47,14 +57,16 @@ void MainMenu(int &);
 void AddData(Player &);
 void AddRecord(Player &, Node *&head, Node *&tail);
 void ViewRecord(Node *&);
-void OpenFile(Node *&, std::string);
+void SaveFile(Node *&, std::string&);
 void ReadFile(std::string);
+void SetFileName(std::string &);
+void RecordFileName(std::string, std::string);
 
 int main()
 {
   int choice;
   Player tempDataHolder;
-  std::string recordFile = "Formative-7.txt";
+  std::string recordFile, fileNameList = "FileNameList.txt";
   Node *head = NULL, *tail = NULL;
 
   do
@@ -72,17 +84,21 @@ int main()
       ViewRecord(head);
       break;
     case 3:
-      OpenFile(head, recordFile);
+      RecordFileName(fileNameList, recordFile);
+      SaveFile(head, recordFile);
       break;
     case 4:
+      ReadFile(fileNameList);
+      SetFileName(recordFile);
       ReadFile(recordFile);
+      system("pause");
+      system("cls");
       break;
     case 0:
       exit(0);
     default:
       break;
     }
-
   } while (true);
 }
 
@@ -166,52 +182,61 @@ void ViewRecord(Node *&head)
 }
 
 // Create Permanent File and Stores Data hold in the LinkedList
-void OpenFile(Node *&head, std::string recordFile)
+void SaveFile(Node *&head, std::string& recordFile)
 {
   // create temporary node(current) for traversing the linked list
   Node *current = head;
   // creates or connect to file
-  std::ofstream outFile(recordFile);
+  std::ofstream outFile;
 
-  // checks if the file is open and if there is data in the linked list
-  if (current != nullptr && outFile.is_open())
+  // checks if there is no data in the linked list
+  if (current == nullptr)
   {
-    // traverse while there is data in the linked list
-    while (current)
-    {
-      outFile
-          << "Name: " << current->player.nickname << std::endl
-          << "Age: " << current->player.age << std::endl
-          << "Scores: ";
+    std::cout << "No Record Yet\n";
+    system("pause");
+    system("cls");
+    return;
+  }
+  // if there is data in the linked list
+  else
+  {
+    // set the file name
+    SetFileName(recordFile);
 
-      for (int i = 0; i < head->player.MAX; ++i)
+    // connect to file
+    outFile.open(recordFile);
+    
+    // checks if the file is open and if there is data in the linked list
+    if (outFile.is_open())
+    {
+      // traverse while there is data in the linked list
+      while (current)
       {
-        outFile << current->player.scores[i];
-        if (i == current->player.MAX - 1)
-          outFile << std::endl;
-        else
-          outFile << ", ";
+        // call the format function of the player structure
+        outFile << current->player.Format();
+
+        // Move to the next node
+        current = current->next;
       }
 
-      // Move to the next node
-      current = current->next;
+      // display message that the records are saved
+      std::cout << "Records saved to " << recordFile << "." << std::endl;
     }
+    else
+      std::cout << "Invalid" << std::endl;
 
-    std::cout << "Records saved to " << recordFile << "." << std::endl;
+    outFile.close();
   }
-  else
-    std::cout << "Invalid" << std::endl;
 
-  outFile.close();
   system("pause");
   system("cls");
 }
 
 // Read Permanent File
-void ReadFile(std::string recordFile)
+void ReadFile(std::string fileName)
 {
-  // Read from recordFile
-  std::ifstream inFile(recordFile);
+  // Read from fileName
+  std::ifstream inFile(fileName);
 
   // Check if file is open
   if (!inFile.is_open())
@@ -222,7 +247,52 @@ void ReadFile(std::string recordFile)
 
   // Close file connection
   inFile.close();
+}
 
-  system("pause");
-  system("cls");
+// Set File Name
+void SetFileName(std::string & recordFile)
+{
+    std::cout << "Enter File Name: ";
+    std::cin >> recordFile;
+
+    system("cls");
+  
+    // check if .txt is not in the input, then add the ,txt
+    if (recordFile.find(".txt")  == std::string::npos)
+      recordFile = recordFile + ".txt";
+}
+
+// creates record of file names
+void RecordFileName(std::string listOfFile, std::string fileName)
+{
+  // connects to file and appends data
+  std::ofstream outFile(listOfFile, std::ios::app);
+  std::ifstream inFile;
+  std::string temp;
+
+  // checks if the file is open to append
+  if (outFile)
+  {
+    // connects to file and reads data
+    inFile.open(listOfFile);
+
+    // traverse and check if the file name is already in the list
+    while (inFile >> temp)
+      if (temp == fileName)
+        return;
+
+    // if file name is not in the list, append the file name
+    outFile << fileName << std::endl;
+  }
+  else
+  {
+    // if file is not open, create a new file
+    outFile.open(listOfFile);
+
+    // checks if the file is open
+    if (outFile)
+      outFile << fileName << std::endl;
+    else
+      std::cout << "Invalid" << std::endl;
+  }
 }
