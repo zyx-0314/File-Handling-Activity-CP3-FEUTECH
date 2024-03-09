@@ -80,7 +80,7 @@ Has LinkedList with FIFO concept applied, can store data and retrievable.
 
 ---
 
-### 1.1.0 (in the work)
+### 1.1.0
 Has LinkedList with FIFO concept applied, can store data and retrievable.
 
 #### Features
